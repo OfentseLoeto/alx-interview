@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''Function that returns a list of lists of
+   integers representing the Pascal’s triangle
+'''
 
 def pascal_triangle(n):
 
@@ -25,11 +28,3 @@ def pascal_triangle(n):
         triangle.append(row)
 
     return triangle
-
-def print_triangle(triangle):
-    for row in triangle:
-        print("[{}]".format(",".join([str(x) for x in row])))
-# Test the function
-if __name__ == '__main__':
-    result = pascal_triangle(5)
-    print_triangle(result)
