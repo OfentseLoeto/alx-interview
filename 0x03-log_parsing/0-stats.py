@@ -2,13 +2,14 @@
 """
 Define a dictionary to store status code counts
 """
+import sys
+import signal
 
-
-def status_code_counts = {
+status_code_counts = {
         200 : 0,
         301 : 0,
-        400 : 0
-        401 : 0
+        400 : 0,
+        401 : 0,
         403 : 0,
         404 : 0,
         405 : 0,
@@ -29,7 +30,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 # Function to print statistics
 def print_stats():
-    print(f"Total file size: {file_size}")
+    print(f"Total file size: {total_file_size}")
     for status_code, count in sorted(status_code_counts.items()):
         if status_code > 0:
             print(f"{status_code}: {count}")
