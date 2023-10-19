@@ -1,6 +1,15 @@
 #!/usr/bin/python3
 """
-Writing a method that determines if all the boxes can be opened.
+  Determines if all the boxes can be opened.
+  This function checks if all boxes can be opened
+  by starting from the first box using (DFS) to
+  explore and unlock other boxes
+
+  Args:
+      Boxes (list of lists): Each element if a list of key to othe boxes.
+
+  Returns:
+      bool: True if all boxes can be opened else False
 """
 
 def canUnlockAll(boxes):
