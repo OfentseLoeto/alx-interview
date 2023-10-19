@@ -25,7 +25,7 @@ def canUnlockAll(boxes):
     while stack:
         current_box = stack.pop()
         for key in boxes[current_box]:
-            if not visited[key]:
+            if key < n and not visited[key]:
                 visited[key] = True
                 stack.append(key)
 
