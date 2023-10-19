@@ -12,6 +12,7 @@
       bool: True if all boxes can be opened else False
 """
 
+
 def canUnlockAll(boxes):
     n = len(boxes)
     # Keeping track of the visited boxes
