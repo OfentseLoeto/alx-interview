@@ -1,63 +1,63 @@
 #!/usr/bin/python3
 """
-Define a dictionary to store status code counts
+Defining the sttus code to track
 """
 import sys
 import signal
 
-status_code_counts = {
-        200 : 0,
-        301 : 0,
-        400 : 0,
-        401 : 0,
-        403 : 0,
-        404 : 0,
-        405 : 0,
-        500 : 0
-        }
 
-# Initialize the total file size
-total_file_size = 0
-# counter for line read
-lines_read = 0
+# define the status code to track
+STATUS_CODE = [200, 301, 400, 401, 403, 404, 405, 500]
 
-# Define a function to handle Ctrl+C (KeyboardInterruption)
+
 def signal_handler(signal, frame):
-    print_stats()
+    '''Handle Ctrl+C (SIGINT) to print statistics and exit'''
+    print_statistics()
+    sys.exit(0)
 
-# Register signal handler Ctrl+C
+
+def print_stats():
+    '''Print the acumulated statistics'''
+    if total_file_size > 0:
+        print(f"Total file size: {total_file_size}")
+        for code in sorted(STATUS_CODE):
+            if code in status_count:
+                print(f"{code}: {status_count}")
+
+
+total_file_size = 0
+status_count = {}
+line_count = 0
+
+# Register the Ctrl+C signal handler
 signal.signal(signal.SIGINT, signal_handler)
 
-# Function to print statistics
-def print_stats():
-    print(f"Total file size: {total_file_size}")
-    for status_code, count in sorted(status_code_counts.items()):
-        if status_code > 0:
-            print(f"{status_code}: {count}")
-
-# Read input line by line from stdin
 for line in sys.stdin:
-    # split line into parts
+    line = line.strip()
+
+    # Parse the line input
     parts = line.split()
+    if len(parts) != 7:
+        continue
 
-    # Check if line matches the expected format
-    if len(parts) == 10 and parts[8].isdigit():
-        # Extract status code and file size
-        status_code = int(parts[8])
-        file_size = int(parts[9])
+    ip_address, _, _, status_code, file_size = parts
 
-        # update the total file size
-        total_file_size += file_size
+    try:
+        status_code = int(status_code)
+        file_size = int(file_size)
+    except ValueError:
+        continue
 
-        # Update status code counts
-        if status_code in status_code_counts:
-            status_code_counts[status_code] += 1
+if status_code in STATUS_CODE:
+    total_file_size += file_size
+    if status_code in status_count:
+        status_counts[status_code] += 1
+    else:
+        status_count[staus_code] = 1
 
-            # Increment line-read count
-            lines_read += 1
+    # Increment line count
+    line_count += 1
 
-            # check if its time to print stats
-            if lines_read % 10 == 0:
-                prints_stats()
-
-print_stats()
+    # Print statistics after every 10 lines
+    if line_count % 10 == 0:
+        print_statistics()
