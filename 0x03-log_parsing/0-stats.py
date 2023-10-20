@@ -1,61 +1,68 @@
 #!/usr/bin/python3
-"""
-Defining the sttus code to track
-"""
 import sys
 import signal
 
 
-# define the status code to track
-STATUS_CODE = [200, 301, 400, 401, 403, 404, 405, 500]
+# Initialize variables to store statistics
+file_sizes = []
+status_code_counts = {
+        200: 0,
+        301: 0,
+        400: 0,
+        401: 0,
+        403: 0,
+        404: 0,
+        405: 0,
+        500: 0
+        }
+
+line_count = 0
 
 
-def signal_handler(signal, frame):
-    '''Handle Ctrl+C (SIGINT) to print statistics and exit'''
+# Function to calculate and print statistics
+def print_statistics():
+    global file_sizes
+    global status_code_counts
+    total_size = sum(file_sizes)
+
+    print(f"File size: {total_size}")
+
+    # Print status codes in ascending order
+    for status_code in sorted(status_code_counts.keys()):
+        count = status_code_counts[status_code]
+        if count > 0:
+            print(f"{status_code}: {count}")
+
+
+# Function to handle SIGINT (CTRL + C) and print statistics
+def handle_interrupt(signum, frame):
     print_statistics()
     sys.exit(0)
 
 
-def print_stats():
-    '''Print the acumulated statistics'''
-    if total_file_size > 0:
-        print(f"Total file size: {total_file_size}")
-        for code in sorted(STATUS_CODE):
-            if code in status_count:
-                print(f"{code}: {status_count}")
+# Register the signal handler for SIGINT
+signal.signal(signal.SIGINT, handle_interrupt)
 
-
-total_file_size = 0
-status_count = {}
-line_count = 0
-
-# Register the Ctrl+C signal handler
-signal.signal(signal.SIGINT, signal_handler)
-
+# Read input line by line from stdin
 for line in sys.stdin:
     line = line.strip()
 
-    # Parse the line input
+    # Parse the input line using space as a separator
     parts = line.split()
-    if len(parts) != 7:
+
+    if len(parts) != 10:
+        # Skip lines that do not match the expected format
         continue
 
-    ip_address, _, _, status_code, file_size = parts
+    # Extract the status code and file size from the line
+    status_code = int(parts[-2])
+    file_size = int(parts[-1])
 
-    try:
-        status_code = int(status_code)
-        file_size = int(file_size)
-    except ValueError:
-        continue
+    # Update statistics
+    file_sizes.append(file_size)
+    if status_code in status_code_counts:
+        status_code_counts[status_code] += 1
 
-if status_code in STATUS_CODE:
-    total_file_size += file_size
-    if status_code in status_count:
-        status_counts[status_code] += 1
-    else:
-        status_count[staus_code] = 1
-
-    # Increment line count
     line_count += 1
 
     # Print statistics after every 10 lines
