@@ -19,8 +19,15 @@ status_code_counts = {
 line_count = 0
 
 
-# Function to calculate and print statistics
 def print_statistics():
+    """
+    Print computed statistics including total file size
+    and status code counts.
+
+    This function is responsible for printing the total
+    file size and the count for each status code in
+    ascending order.
+    """
     global file_sizes
     global status_code_counts
     total_size = sum(file_sizes)
@@ -34,8 +41,16 @@ def print_statistics():
             print(f"{status_code}: {count}")
 
 
-# Function to handle SIGINT (CTRL + C) and print statistics
 def handle_interrupt(signum, frame):
+    """
+    Handles the SIGINT (Ctrl + C) signal and print stats
+    before exiting.
+
+    The function is called when the program receives a SIGINT
+    (Ctrl + C).
+
+    It prints stats and exit gracefully
+    """
     print_statistics()
     sys.exit(0)
 
