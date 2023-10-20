@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import signal
-
+import datetime
 
 # Initialize variables to store statistics
 file_sizes = []
@@ -28,17 +28,19 @@ def print_statistics():
     file size and the count for each status code in
     ascending order.
     """
-    global file_sizes
-    global status_code_counts
+
     total_size = sum(file_sizes)
 
     print(f"File size: {total_size}")
 
     # Print status codes in ascending order
+    if total_size > 0:
+        print(f"{File size}: {total_size}")
+
     for status_code in sorted(status_code_counts.keys()):
         count = status_code_counts[status_code]
         if count > 0:
-            print(f"{status_code}: {count}")
+            print(f"status_code: {count}")
 
 
 def handle_interrupt(signum, frame):
@@ -83,3 +85,5 @@ for line in sys.stdin:
     # Print statistics after every 10 lines
     if line_count % 10 == 0:
         print_statistics()
+
+print statistics()
