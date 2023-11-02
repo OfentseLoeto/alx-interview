@@ -27,14 +27,6 @@ def is_safe(board, row, col, N):
     return True
 
 
-def print_solution(board):
-    """
-    Print the solution based on the required format.
-    """
-    for row in board:
-        print(" ".join(map(str, row)))
-
-
 def solve_nqueens(N):
     """
     Solve the N queens problem and print all solutions.
@@ -48,7 +40,12 @@ def solve_nqueens(N):
 
     def solve(row):
         if row == N:
-            solutions.append([row[:] for row in board])
+            solution = []
+            for i in range(N):
+                for j in range(N):
+                    if board[i][j] == 1:
+                        solution.append([i, j])
+            solutions.append(solution)
             return
 
         for col in range(N):
@@ -64,7 +61,7 @@ def solve_nqueens(N):
         return 1
 
     for solution in solutions:
-        print_solution(solution)
+        print(solution)
         print()
 
     return 0
