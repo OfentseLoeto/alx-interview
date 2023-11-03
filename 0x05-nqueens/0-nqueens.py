@@ -33,7 +33,7 @@ def solve_nqueens(N):
     """
     if N < 4:
         print("N must be at least 4\n")
-        sys.exit(1)
+        return 1
 
     board = [[0 for _ in range(N)] for _ in range(N)]
     solutions = []
@@ -58,13 +58,13 @@ def solve_nqueens(N):
 
     if not solutions:
         print("No solutions found.")
-        sys.exit(1)
+        return 1
 
     for solution in solutions:
         print(solution)
         print()
 
-    sys.exit(0)
+    return 0
 
 
 if __name__ == "__main__":
