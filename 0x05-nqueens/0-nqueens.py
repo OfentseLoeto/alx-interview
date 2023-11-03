@@ -58,7 +58,7 @@ def solve_nqueens(N):
 
     if not solutions:
         print("No solutions found.")
-        return 1
+        sys.exit(1)
 
     for solution in solutions:
         print(solution)
