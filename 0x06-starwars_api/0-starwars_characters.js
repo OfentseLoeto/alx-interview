@@ -1,33 +1,42 @@
-const axios = require('axios');
+#!/usr/bin/node
 
-// Check if the user provided a movie ID as a command-line argument
-if (process.argv.length < 3) {
-    console.log("Usage: node 0-starwars_characters.js <Movie ID>");
-    process.exit(1);
+const request = require('request');
+
+const SWAPI_BASE_URL = 'https://swapi.dev/api';
+
+function getMovieCharacters(movieId) {
+  const filmEndpoint = `${SWAPI_BASE_URL}/films/${movieId}/`;
+
+  request(filmEndpoint, { json: true }, (error, response, body) => {
+    if (error) {
+      console.error('Error:', error);
+    } else if (response.statusCode !== 200) {
+      console.error('Status Code:', response.statusCode);
+    } else {
+      const characters = body.characters;
+      printCharacters(characters, 0);
+    }
+  });
 }
 
-// Define the Star Wars API base URL
-const baseUrl = "https://swapi.dev/api";
+function printCharacters(characters, index) {
+  if (index < characters.length) {
+    const characterEndpoint = characters[index];
+    request(characterEndpoint, { json: true }, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        console.log(body.name);
+        printCharacters(characters, index + 1);
+      } else {
+        console.error('Error fetching character:', error);
+      }
+    });
+  }
+}
 
-// Get the movie ID from the command-line argument
 const movieId = process.argv[2];
 
-// Make a request to the /films endpoint to retrieve information about the movie
-const filmUrl = `${baseUrl}/films/${movieId}/`;
-
-axios.get(filmUrl)
-    .then(response => {
-        const filmData = response.data;
-
-        // Retrieve the list of character URLs from the movie data
-        const characterUrls = filmData['characters'];
-
-        // Print the characters' names
-        Promise.all(characterUrls.map(characterUrl =>
-            axios.get(characterUrl)
-                .then(characterResponse => console.log(characterResponse.data['name']))
-                .catch(error => console.error(`Failed to fetch character data from ${characterUrl}`, error))
-        ))
-            .catch(error => console.error(error));
-    })
-    .catch(error => console.error(`Failed to fetch movie data for Movie ID ${movieId}`, error));
+if (!movieId) {
+  console.error('Please provide a movie ID as the first argument.');
+} else {
+  getMovieCharacters(movieId);
+}
