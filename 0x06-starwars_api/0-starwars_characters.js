@@ -4,7 +4,7 @@ const request = require('request');
 
 const SWAPI_BASE_URL = 'https://swapi.dev/api';
 
-function getMovieCharacters(movieId) {
+function getMovieCharacters (movieId) {
   const filmEndpoint = `${SWAPI_BASE_URL}/films/${movieId}/`;
 
   request(filmEndpoint, { json: true }, (error, response, body) => {
@@ -19,7 +19,7 @@ function getMovieCharacters(movieId) {
   });
 }
 
-function printCharacters(characters, index) {
+function printCharacters (characters, index) {
   if (index < characters.length) {
     const characterEndpoint = characters[index];
     request(characterEndpoint, { json: true }, (error, response, body) => {
