@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Prime game
+Prime Game
 """
 
 
@@ -35,75 +35,47 @@ def isWinner(x, nums):
                 return False
         return True
 
-    def get_primes(limit):
+    def count_primes(n):
         """
-        Generates a list of prime numbers up to a given limit.
+        Counts the number of prime numbers up to and including n.
 
         Args:
-        - limit (int): The upper limit for generating prime numbers.
+        - n (int): The upper limit for counting primes.
 
         Returns:
-        - list: List of prime numbers.
+        - int: The count of prime numbers.
         """
-        primes = [True] * (limit + 1)
-        primes[0] = primes[1] = False
-        for i in range(2, int(limit**0.5) + 1):
-            if primes[i]:
-                for j in range(i * i, limit + 1, i):
-                    primes[j] = False
-        return [num for num in range(limit + 1) if primes[num]]
-
-    def count_prime_moves(n):
-        """
-        Counts the number of prime moves for a given number n.
-
-        Args:
-        - n (int): The number for which prime moves are counted.
-
-        Returns:
-        - int: The count of prime moves.
-        """
-        primes = get_primes(n)
         count = 0
-
-        for prime in primes:
-            if n % prime == 0:
+        for i in range(2, n + 1):
+            if is_prime(i):
                 count += 1
         return count
 
     def play_round(n):
         """
-        Simulates a round of the prime game for a given number n.
+        Simulates a round of the prime number game.
 
         Args:
-        - n (int): The starting number for the round.
+        - n (int): The upper limit of consecutive integers for the round.
 
         Returns:
-        - str: The name of the player who won the round ("Ben" or "Maria").
+        - bool: True if Maria wins the round, False otherwise.
         """
-        while n > 1:
-            count = count_prime_moves(n)
-            if count % 2 == 0:
-                count -= 1
-            else:
-                n //= 2
-
-        return "Maria" if n == 1 else "Ben"
+        primes_remaining = count_primes(n)
+        return primes_remaining % 2 == 1
 
     maria_wins = 0
     ben_wins = 0
 
-    for i in range(x):
-        winner = play_round(nums[i])
-        if winner == "Maria":
+    for n in nums:
+        if play_round(n):
             maria_wins += 1
         else:
             ben_wins += 1
 
-    # Determine the overall winner or return None in case of a tie
     if maria_wins > ben_wins:
         return "Maria"
-    elif maria_wins < ben_wins:
+    elif ben_wins > maria_wins:
         return "Ben"
     else:
         return None
