@@ -5,7 +5,29 @@ Prime game
 
 
 def isWinner(x, nums):
+    """
+    Determines the winner of the prime game for multiple rounds.
+
+    Args:
+    - x (int): The number of rounds to be played.
+    - nums (list): List of integers representing the values of n
+                   for each round.
+
+    Returns:
+    - str or None: The name of the player that won the most rounds
+                   (either "Maria", "Ben") or None in case of a tie.
+    """
+
     def is_prime(num):
+        """
+        Checks if a given number is prime.
+
+        Args:
+        - num (int): The number to be checked.
+
+        Returns:
+        - bool: True if the number is prime, False otherwise.
+        """
         if num < 2:
             return False
         for i in range(2, int(num**0.5) + 1):
@@ -14,6 +36,15 @@ def isWinner(x, nums):
         return True
 
     def get_primes(limit):
+        """
+        Generates a list of prime numbers up to a given limit.
+
+        Args:
+        - limit (int): The upper limit for generating prime numbers.
+
+        Returns:
+        - list: List of prime numbers.
+        """
         primes = []
         for i in range(2, limit + 1):
             if is_prime(i):
@@ -21,6 +52,15 @@ def isWinner(x, nums):
         return primes
 
     def count_prime_moves(n):
+        """
+        Counts the number of prime moves for a given number n.
+
+        Args:
+        - n (int): The number for which prime moves are counted.
+
+        Returns:
+        - int: The count of prime moves.
+        """
         primes = get_primes(n)
         count = 0
 
@@ -30,6 +70,15 @@ def isWinner(x, nums):
         return count
 
     def play_round(n):
+        """
+        Simulates a round of the prime game for a given number n.
+
+        Args:
+        - n (int): The starting number for the round.
+
+        Returns:
+        - str: The name of the player who won the round ("Ben" or "Maria").
+        """
         while n > 1:
             count = count_prime_moves(n)
             if count % 2 == 0:
@@ -49,6 +98,7 @@ def isWinner(x, nums):
         else:
             maria_wins += 1
 
+    # Determine the overall winner or return None in case of a tie
     if ben_wins > maria_wins:
         return "Ben"
     elif ben_wins < maria_wins:
