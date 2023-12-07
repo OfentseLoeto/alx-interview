@@ -88,22 +88,22 @@ def isWinner(x, nums):
             else:
                 n //= 2
 
-        return "Ben" if n == 1 else "Maria"
+        return "Maria" if n == 1 else "Ben"
 
-    ben_wins = 0
     maria_wins = 0
+    ben_wins = 0
 
     for i in range(x):
         winner = play_round(nums[i])
-        if winner == "Ben":
-            ben_wins += 1
-        else:
+        if winner == "Maria":
             maria_wins += 1
+        else:
+            ben_wins += 1
 
     # Determine the overall winner or return None in case of a tie
-    if ben_wins > maria_wins:
-        return "Ben"
-    elif ben_wins < maria_wins:
+    if maria_wins > ben_wins:
         return "Maria"
+    elif maria_wins < ben_wins:
+        return "Ben"
     else:
         return None
