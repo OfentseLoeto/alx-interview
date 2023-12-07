@@ -45,11 +45,13 @@ def isWinner(x, nums):
         Returns:
         - list: List of prime numbers.
         """
-        primes = []
-        for i in range(2, limit + 1):
-            if is_prime(i):
-                primes.append(i)
-        return primes
+        primes = [True] * (limit + 1)
+        primes[0] = primes[1] = False
+        for i in range(2, int(limit**0.5) + 1):
+            if primes[i]:
+                for j in range(i * i, limit + 1, i):
+                    primes[j] = False
+        return [num for num in range(limit + 1) if primes[num]]
 
     def count_prime_moves(n):
         """
