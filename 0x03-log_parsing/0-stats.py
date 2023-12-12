@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-reads stdin line by line and computes metrics
+ reads stdin line by line and computes metrics
 """
 import sys
 
@@ -28,8 +28,8 @@ def process_line(line, total_size, status_counts):
     Args:
         line (str): Input line from stdin.
         total_size (int): Total file size accumulated.
-        status_counts (dict): Dictionary with status codes as keys and their
-                              counts as values.
+        status_counts (dict): Dictionary with status codes as keys and
+                              their counts as values.
 
     Returns:
         tuple: Updated total_size and status_counts.
@@ -54,8 +54,8 @@ def process_line(line, total_size, status_counts):
 
 def main():
     """
-    Main function to read stdin line by line, compute metrics, and
-    print statistics.
+    Main function to read stdin line by line, compute metrics,
+    and print statistics.
     """
     total_size = 0
     status_counts = {}
@@ -71,14 +71,11 @@ def main():
                 print_stats(total_size, status_counts)
 
         # Print stats after processing all lines
-        print_stats(total_size, status_counts)
+        if line_count % 10 != 0:
+            print_stats(total_size, status_counts)
 
     except KeyboardInterrupt:
         # Handle manual interruption (Ctrl+C)
-        print_stats(total_size, status_counts)
-
-    except EOFError:
-        # Print stats after processing all lines
         print_stats(total_size, status_counts)
 
 
