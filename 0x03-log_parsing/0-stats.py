@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """
-Readsing stdin line by line and computes metrics
+reads stdin line by line and computes metrics
 """
 import sys
-import signal
 
 
 def print_stats(total_size, status_counts):
@@ -12,8 +11,8 @@ def print_stats(total_size, status_counts):
 
     Args:
         total_size (int): Total file size accumulated.
-        status_counts (dict): Dictionary with status codes
-                              as keys and their counts as values.
+        status_counts (dict): Dictionary with status codes as keys and
+                              their counts as values.
     """
     print(f"File size: {total_size}")
     for code in sorted(status_counts.keys()):
@@ -23,21 +22,20 @@ def print_stats(total_size, status_counts):
 
 def process_line(line, total_size, status_counts):
     """
-    Processes a line from stdin, extracts relevant information,
-    and updates metrics.
+    Processes a line from stdin, extracts relevant information, and
+    updates metrics.
 
     Args:
         line (str): Input line from stdin.
         total_size (int): Total file size accumulated.
-        status_counts (dict): Dictionary with status codes
-                              as keys and their counts as values.
+        status_counts (dict): Dictionary with status codes as keys and their
+                              counts as values.
 
     Returns:
         tuple: Updated total_size and status_counts.
     """
     try:
         parts = line.strip().split()
-        ip_address = parts[0]
         status_code = int(parts[-2])
         file_size = int(parts[-1])
 
@@ -56,24 +54,12 @@ def process_line(line, total_size, status_counts):
 
 def main():
     """
-    Main function to read stdin line by line, compute metrics,
-    and print statistics.
+    Main function to read stdin line by line, compute metrics, and
+    print statistics.
     """
     total_size = 0
     status_counts = {}
     line_count = 0
-
-    def signal_handler(sig, frame):
-        """
-        Handles the interrupt signal (SIGINT) and prints
-        statistics before exiting.
-        """
-        nonlocal total_size, status_counts
-        print_stats(total_size, status_counts)
-        sys.exit(0)
-
-    # Register the signal handler for SIGINT (Ctrl+C)
-    signal.signal(signal.SIGINT, signal_handler)
 
     try:
         for line in sys.stdin:
@@ -83,11 +69,10 @@ def main():
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
+
         # Print stats after processing all lines
         print_stats(total_size, status_counts)
 
-        if line_count == 0:
-            print_stats(total_size, status_counts)
     except KeyboardInterrupt:
         # Handle manual interruption (Ctrl+C)
         print_stats(total_size, status_counts)
