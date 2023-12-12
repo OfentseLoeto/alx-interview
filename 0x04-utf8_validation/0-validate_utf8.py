@@ -1,7 +1,7 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """
-A method that determines if a given data set represents
-a valid UTF-8 encoding
+A method that determines if a given data set represents a
+valid UTF-8 encoding
 """
 
 
@@ -12,8 +12,8 @@ def validUTF8(data):
     :param data: List of integers representing 1 byte of data each.
     :return: True if data is a valid UTF-8 encoding, else False.
     """
-    # Helper function to check if the given byte is a valid start of
-    # a UTF-8 character
+    # Helper function to check if the given byte is a valid start of a
+    # UTF-8 character
     def is_start_of_char(byte):
         return (byte >> 6) != 0b10
 
@@ -29,8 +29,7 @@ def validUTF8(data):
             elif (data[i] >> 3) == 0b11110:
                 char_size = 4
 
-            # Check if there are enough bytes in the data for
-            # the character
+            # Check if there are enough bytes in the data for the character
             if i + char_size > len(data):
                 return False
 
