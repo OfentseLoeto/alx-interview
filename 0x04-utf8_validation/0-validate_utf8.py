@@ -29,7 +29,8 @@ def validUTF8(data):
             elif (data[i] >> 3) == 0b11110:
                 char_size = 4
 
-            # Check if there are enough bytes in the data for the character
+            # Check if there are enough bytes in the data for
+            # the character
             if i + char_size > len(data):
                 return False
 
