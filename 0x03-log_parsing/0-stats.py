@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import sys
-import signal
 import datetime
+from signal import signal, SIGINT, SIG_DFL
+
 
 # Initialize variables to store statistics
 file_sizes = []
@@ -35,7 +36,7 @@ def print_statistics():
 
     # Print status codes in ascending order
     if total_size > 0:
-        print(f"{File size}: {total_size}")
+        print(f"File size: {total_size}")
 
     for status_code in sorted(status_code_counts.keys()):
         count = status_code_counts[status_code]
@@ -45,20 +46,18 @@ def print_statistics():
 
 def handle_interrupt(signum, frame):
     """
-    Handles the SIGINT (Ctrl + C) signal and print stats
-    before exiting.
+    Handles the SIGINT (Ctrl + C) signal and prints stats before exiting.
 
-    The function is called when the program receives a SIGINT
-    (Ctrl + C).
+    The function is called when the program receives a SIGINT (Ctrl + C).
 
-    It prints stats and exit gracefully
+    It prints stats and exits gracefully.
     """
     print_statistics()
     sys.exit(0)
 
 
 # Register the signal handler for SIGINT
-signal.signal(signal.SIGINT, handle_interrupt)
+signal(SIGINT, handle_interrupt)
 
 # Read input line by line from stdin
 for line in sys.stdin:
@@ -86,4 +85,4 @@ for line in sys.stdin:
     if line_count % 10 == 0:
         print_statistics()
 
-print statistics()
+print_statistics()
