@@ -83,8 +83,17 @@ def main():
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
+        # Print stats after processing all lines
+        print_stats(total_size, status_counts)
+
+        if line_count == 0:
+            print_stats(total_size, status_counts)
     except KeyboardInterrupt:
         # Handle manual interruption (Ctrl+C)
+        print_stats(total_size, status_counts)
+
+    except EOFError:
+        # Print stats after processing all lines
         print_stats(total_size, status_counts)
 
 
