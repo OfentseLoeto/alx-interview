@@ -5,12 +5,18 @@ Perimeter of the island
 
 
 def island_perimeter(grid):
-    perimeter = 0
-    rows = len(grid)
-    cols = len(grid[0])
+    """
+    island_perimeter - Calculate the perimeter of the island described in grid
 
-    for i in range(rows):
-        for j in range(cols):
+    Args:
+        grid (list of list of int): The grid representing the island.
+
+    Returns:
+        int: The perimeter of the island.
+    """
+    perimeter = 0
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
             if grid[i][j] == 1:
                 perimeter += 4
                 if i > 0 and grid[i - 1][j] == 1:
