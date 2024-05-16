@@ -6,12 +6,13 @@ Prime game between Maria and Ben.
 
 def isWinner(x, nums):
     """
-    Determines the winner of multiple rounds of the prime game.
+      Determines the winner of multiple rounds of the prime game.
 
     Args:
         x (int): The number of rounds.
-        nums (list): An array of integers representing the upper
-                     bounds for each round.
+
+    nums (list): An array of integers representing the upper
+               bounds for each round.
 
     Returns:
         str or None: The name of the player that won the most rounds.
@@ -19,13 +20,13 @@ def isWinner(x, nums):
     """
     def is_Prime(n):
         """
-        Checks if a number is prime.
+          Checks if a number is prime.
 
         Args:
             n (int): The number to check.
 
         Returns:
-            bool: True if n is prime, False otherwise.
+              bool: True if n is prime, False otherwise.
         """
         if n <= 1:
             return False
@@ -41,6 +42,15 @@ def isWinner(x, nums):
         return True
 
     def winner(n):
+        """
+        Determines the winner of a single round of the prime game.
+
+        Args:
+            n (int): The upper bound of the round.
+
+        Returns:
+               str: The name of the winning player (Maria or Ben).
+        """
         count = 0
         for i in range(2, n + 1):
             if is_Prime(i):
